@@ -34,10 +34,12 @@ public class ShopController {
     public Collection<Article> getAllArticles() {
         return storageService.getAllStorageArticle().values();
     }
+
     @GetMapping("/search")
     public List<SearchResult> search(@RequestParam String pattern) {
         return searchService.search(pattern);
     }
+
     @GetMapping("/searchable")
     public Collection<Searchable> getAllSearchable() {
         return Stream.concat(getAllProducts().stream(),getAllArticles().stream()).collect(Collectors.toList());
