@@ -21,13 +21,14 @@ public class StorageService {
         createTest();
     }
 
-    public Map<UUID, Product> getAllStorageProduct() {
-        return storageProduct;
+    public Collection <Product> getAllStorageProduct() {
+        return storageProduct.values();
     }
 
-    public Map<UUID, Article> getAllStorageArticle() {
-        return storageArticle;
+    public Collection <Article> getAllStorageArticle() {
+        return storageArticle.values();
     }
+
     public Collection<Searchable> getAllSearchable() {
         List<Searchable> allSearchable = new ArrayList<>();
         allSearchable.addAll(storageProduct.values());
@@ -55,5 +56,9 @@ public class StorageService {
         storageProduct.put(egg.getId(), egg);
         storageArticle.put(article1.getId(), article1);
         storageArticle.put(article2.getId(), article2);
+    }
+
+    public Optional<Product> getProductById(UUID id) {
+        return Optional.ofNullable(storageProduct.get(id));
     }
 }

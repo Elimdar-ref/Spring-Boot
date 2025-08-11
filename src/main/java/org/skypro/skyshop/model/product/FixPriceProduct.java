@@ -4,7 +4,7 @@ import java.util.UUID;
 
 public class FixPriceProduct extends Product {
     private static final String SCREAMING_SNAKE_CASE = "Цена";
-    public static final int fixedPrice = 30;
+    private final int fixedPrice = 30;
 
     public FixPriceProduct(String productName, UUID id) {
         super(productName, id);
