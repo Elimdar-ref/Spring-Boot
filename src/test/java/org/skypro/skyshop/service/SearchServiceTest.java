@@ -25,7 +25,7 @@ class SearchServiceTest {
 
 
     @Test
-    void search() {
+    void searchByProductName() {
         when(storageService.getAllSearchable()).thenReturn(Collections.emptyList());
         List<SearchResult> result = searchService.search("Ябл");
         assertTrue(result.isEmpty());
