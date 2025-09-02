@@ -80,5 +80,6 @@ public class BasketServiceTest {
         assertEquals(2, item.getProduct().getPrice());
         assertEquals(id, item.getProduct().getId());
         assertEquals(3, item.getQuantity());
+        assertEquals(6, basket1.getTotal());
     }
 }
