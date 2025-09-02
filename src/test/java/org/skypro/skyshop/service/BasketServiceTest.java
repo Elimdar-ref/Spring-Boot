@@ -17,6 +17,8 @@ import org.skypro.skyshop.model.search.SearchResult;
 import org.skypro.skyshop.model.search.Searchable;
 
 import java.util.*;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.Mockito.*;
@@ -57,20 +59,26 @@ public class BasketServiceTest {
     @Test
     void getUserBasket_WhenBasketIsEmpty() {
         when(basket.getBasket()).thenReturn(Collections.emptyMap());
-        assertTrue(basket.getBasket().isEmpty());
+        UserBasket basket1 = basketService.getUserBasket();
+        assertTrue(basket1.getItems().isEmpty());
     }
 
     @Test
     void getUserBasket_WhenBasketIsNotEmpty() {
         UUID id = UUID.randomUUID();
-        Product product = mock(Product.class);
-        when(product.getPrice()).thenReturn(30);
-        when(basket.getBasket()).thenReturn(Map.of(id, 2));
-        when(storageService.getAllSearchable()).thenReturn(Map.of(id, product));
+        Product product = new SimpleProduct("Яблоко", 2, id);
+        when(basket.getBasket()).thenReturn(Map.of(id, 3));
+        when(storageService.getProductById(id)).thenReturn(Optional.of(product));
 
         UserBasket basket1 = basketService.getUserBasket();
-        List<BasketItem> items = basket.getBasket();
-        assertEquals(1, items.size());
-        assertEquals(200, basket1.getTotal());
+
+        assertEquals(1, basket1.getItems().size());
+
+        BasketItem item = basket1.getItems().get(0);
+
+        assertEquals("Яблоко", item.getProduct().getProductName());
+        assertEquals(2, item.getProduct().getPrice());
+        assertEquals(id, item.getProduct().getId());
+        assertEquals(3, item.getQuantity());
     }
 }
